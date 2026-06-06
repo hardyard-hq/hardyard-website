@@ -1,222 +1,1432 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HardYard — Built by the Graft. Protected by the Shield.</title>
-  <meta name="description" content="HardYard is the app built for tradespeople. Tool protection, job records, site safety, marketplace and more. Built by the graft." />
-  <meta name="google-site-verification" content="v81bpmCefRIqL3DjUTaWBly8VhPTrGR4E7ReNMx_JqE" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --orange: #FF6B1A;
-      --cyan: #00D4FF;
-      --bg: #0a0a0a;
-      --bg2: #111111;
-      --bg3: #181818;
-      --border: rgba(255,255,255,0.08);
-      --text: #f0f0f0;
-      --muted: #888;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HardYard — The Operating System for Trades</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange: #FF6B1A;
+    --cyan: #00D4FF;
+    --black: #000000;
+    --dark: #0a0a0a;
+    --card: #111111;
+    --border: #1f1f1f;
+    --text: #ffffff;
+    --muted: #666666;
+  }
+
+  @property --angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .nav-logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 2px;
+  }
+
+  .nav-logo-text span:first-child { color: #fff; }
+  .nav-logo-text span:last-child { color: var(--orange); }
+
+  .nav-shield {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-cta {
+    background: var(--orange);
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 14px;
+    letter-spacing: 2px;
+    padding: 10px 22px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+  }
+
+  .nav-cta:hover { background: #ff8533; transform: scale(1.03); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255,107,26,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,212,255,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse 40% 30% at 20% 60%, rgba(255,107,26,0.04) 0%, transparent 40%);
+  }
+
+  /* ── INDUSTRIAL SPARKS ── */
+  .ticker-wrapper {
+    position: relative;
+    overflow: visible;
+  }
+
+  .grinder-sparks {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+    overflow: visible;
+  }
+
+  .gspark {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: gspark-fly var(--dur) ease-out forwards;
+    top: 50%;
+    left: var(--x);
+    transform-origin: center;
+  }
+
+  @keyframes gspark-fly {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
     }
-    html { scroll-behavior: smooth; }
-    body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; line-height: 1.6; overflow-x: hidden; }
-    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; background: rgba(10,10,10,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
-    .nav-logo { display: flex; align-items: center; gap: 10px; }
-    .nav-logo img { height: 36px; width: auto; }
-    .nav-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: 0.04em; color: #fff; }
-    .nav-wordmark span { color: var(--orange); }
-    .nav-cta { background: var(--orange); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 9px 20px; border-radius: 4px; transition: background 0.2s, transform 0.15s; }
-    .nav-cta:hover { background: #e85a0e; transform: translateY(-1px); }
-    .hero { min-height: 100svh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 24px 60px; position: relative; overflow: hidden; }
-    .hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(255,107,26,0.18) 0%, transparent 65%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(0,212,255,0.10) 0%, transparent 60%); pointer-events: none; }
-    .hero-badge { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.3); color: var(--cyan); font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 28px; animation: fadeUp 0.6s ease both; }
-    .hero-badge::before { content: '●'; font-size: 0.5rem; color: var(--cyan); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    .hero-logo { width: 110px; height: auto; margin-bottom: 28px; animation: fadeUp 0.6s 0.1s ease both; filter: drop-shadow(0 0 30px rgba(255,107,26,0.4)); }
-    .hero h1 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(2.8rem, 8vw, 5.5rem); line-height: 1.0; letter-spacing: -0.01em; text-transform: uppercase; margin-bottom: 10px; animation: fadeUp 0.6s 0.15s ease both; }
-    .hero h1 .line-orange { color: var(--orange); display: block; }
-    .hero h1 .line-cyan { color: var(--cyan); display: block; }
-    .hero-tagline { font-family: 'Barlow Condensed', sans-serif; font-weight: 400; font-style: italic; font-size: clamp(1.1rem, 3vw, 1.5rem); color: var(--muted); margin-bottom: 36px; animation: fadeUp 0.6s 0.2s ease both; }
-    .hero-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; animation: fadeUp 0.6s 0.3s ease both; }
-    .btn-primary { display: inline-block; background: var(--orange); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.15rem; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; padding: 16px 40px; border-radius: 5px; transition: background 0.2s, transform 0.15s, box-shadow 0.2s; box-shadow: 0 4px 24px rgba(255,107,26,0.35); }
-    .btn-primary:hover { background: #e85a0e; transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,107,26,0.5); }
-    .hero-sub { font-size: 0.85rem; color: var(--muted); letter-spacing: 0.03em; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-    section { padding: 72px 24px; }
-    .section-inner { max-width: 900px; margin: 0 auto; }
-    .section-label { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 0.8rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
-    .section-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: clamp(2rem, 5vw, 3rem); text-transform: uppercase; line-height: 1.05; margin-bottom: 16px; }
-    .section-title span { color: var(--orange); }
-    .section-body { color: #aaa; font-size: 1rem; max-width: 560px; margin-bottom: 48px; }
-    .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    @media (min-width: 640px) { .modules-grid { grid-template-columns: repeat(3, 1fr); } }
-    .module-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 10px; padding: 24px 18px; transition: border-color 0.2s, transform 0.2s; position: relative; overflow: hidden; }
-    .module-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--orange), var(--cyan)); opacity: 0; transition: opacity 0.2s; }
-    .module-card:hover { border-color: rgba(255,107,26,0.3); transform: translateY(-3px); }
-    .module-card:hover::before { opacity: 1; }
-    .module-icon { font-size: 1.8rem; margin-bottom: 12px; display: block; }
-    .module-name { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; margin-bottom: 6px; }
-    .module-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
-    .module-tag { display: inline-block; margin-top: 10px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 3px; background: rgba(255,107,26,0.15); color: var(--orange); }
-    .pricing-section { background: var(--bg2); }
-    .pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 600px; }
-    .price-card { border-radius: 10px; padding: 28px 22px; border: 1px solid var(--border); }
-    .price-card.hardyard { background: linear-gradient(145deg, rgba(255,107,26,0.12), rgba(0,212,255,0.06)); border-color: rgba(255,107,26,0.35); }
-    .price-card.competitor { background: var(--bg3); }
-    .price-brand { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; }
-    .price-card.hardyard .price-brand { color: var(--orange); }
-    .price-card.competitor .price-brand { color: var(--muted); }
-    .price-amount { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 2.4rem; line-height: 1; margin-bottom: 4px; }
-    .price-card.hardyard .price-amount { color: #fff; }
-    .price-card.competitor .price-amount { color: #666; }
-    .price-period { font-size: 0.8rem; color: var(--muted); margin-bottom: 18px; }
-    .price-features { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-    .price-features li { font-size: 0.85rem; display: flex; align-items: flex-start; gap: 8px; }
-    .price-features li::before { content: '✓'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-    .price-card.hardyard .price-features li::before { color: var(--cyan); }
-    .price-card.competitor .price-features li::before { color: #444; }
-    .price-card.competitor .price-features li { color: #666; }
-    .price-note { margin-top: 20px; font-size: 0.8rem; color: var(--muted); font-style: italic; }
-    .steps { display: flex; flex-direction: column; gap: 0; position: relative; max-width: 480px; }
-    .step { display: flex; gap: 20px; align-items: flex-start; position: relative; }
-    .step:not(:last-child)::after { content: ''; position: absolute; left: 19px; top: 44px; width: 2px; height: calc(100% - 4px); background: linear-gradient(to bottom, var(--orange), transparent); }
-    .step-num { width: 40px; height: 40px; border-radius: 50%; background: var(--orange); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 0 16px rgba(255,107,26,0.4); }
-    .step-content { padding: 6px 0 36px; }
-    .step-title { font-family: 'Barlow Condensed', sans-serif; font-weight: 700; font-size: 1.15rem; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; margin-bottom: 4px; }
-    .step-desc { font-size: 0.9rem; color: var(--muted); }
-    .cta-band { background: linear-gradient(135deg, rgba(255,107,26,0.15) 0%, rgba(0,212,255,0.08) 100%); border-top: 1px solid rgba(255,107,26,0.2); border-bottom: 1px solid rgba(255,107,26,0.2); text-align: center; padding: 64px 24px; }
-    .cta-band h2 { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: clamp(2rem, 6vw, 3.5rem); text-transform: uppercase; line-height: 1.05; margin-bottom: 16px; }
-    .cta-band h2 span { color: var(--orange); }
-    .cta-band p { color: #aaa; margin-bottom: 32px; font-size: 1rem; }
-    footer { background: #070707; border-top: 1px solid var(--border); padding: 48px 24px 32px; text-align: center; }
-    .footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 8px; }
-    .footer-logo img { height: 32px; }
-    .footer-wordmark { font-family: 'Barlow Condensed', sans-serif; font-weight: 800; font-size: 1.3rem; color: #fff; }
-    .footer-wordmark span { color: var(--orange); }
-    .footer-manifesto { font-family: 'Barlow Condensed', sans-serif; font-style: italic; font-size: 0.9rem; color: var(--muted); margin-bottom: 24px; }
-    .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-bottom: 20px; }
-    .footer-links a { color: var(--muted); text-decoration: none; font-size: 0.85rem; transition: color 0.2s; }
-    .footer-links a:hover { color: var(--cyan); }
-    .footer-social { display: flex; justify-content: center; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
-    .social-pill { background: var(--bg2); border: 1px solid var(--border); color: var(--muted); font-family: 'Barlow Condensed', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; padding: 6px 14px; border-radius: 100px; transition: border-color 0.2s, color 0.2s; }
-    .social-pill:hover { border-color: var(--cyan); color: var(--cyan); }
-    .footer-copy { font-size: 0.78rem; color: #444; }
-    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-  </style>
+    100% {
+      transform: translate(var(--tx), var(--ty)) scale(0);
+      opacity: 0;
+    }
+  }
+
+  /* Hero sparks - keep but make subtler */
+  .spark {
+    position: absolute;
+    border-radius: 50%;
+    animation: float linear infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) translateX(0) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-20px) translateX(var(--drift)) scale(1); opacity: 0; }
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(52px, 12vw, 96px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+    position: relative;
+  }
+
+  .hero-title .line1 { color: #fff; display: block; }
+  .hero-title .line2 { color: var(--orange); display: block; }
+  .hero-title .line3 { color: #fff; display: block; font-size: 0.55em; letter-spacing: 2px; margin-top: 8px; }
+
+  .hero-sub {
+    font-size: 16px;
+    color: #999;
+    max-width: 420px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    position: relative;
+  }
+
+  .hero-sub strong { color: #fff; }
+
+  .hero-btns {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    position: relative;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: #000;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 900;
+    font-size: 16px;
+    letter-spacing: 2px;
+    padding: 16px 36px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    animation: pulse-btn 2.5s ease-in-out infinite;
+    transition: transform 0.2s;
+  }
+
+  .btn-primary:hover { transform: scale(1.04); }
+
+  @keyframes pulse-btn {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,26,0.4); }
+    50% { box-shadow: 0 0 0 12px rgba(255,107,26,0); }
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: #fff;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 2px;
+    padding: 16px 36px;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .btn-secondary:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ── STATS BAR ── */
+  .stats {
+    background: #0d0d0d;
+    border-top: 1px solid #1a1a1a;
+    border-bottom: 1px solid #1a1a1a;
+    padding: 28px 24px;
+  }
+
+  .stats-inner {
+    max-width: 700px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--orange);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ── SECTION LABELS ── */
+  .section {
+    padding: 80px 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    color: var(--cyan);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(32px, 7vw, 52px);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .section-title span { color: var(--orange); }
+
+  .section-body {
+    font-size: 15px;
+    color: #888;
+    line-height: 1.7;
+    margin-bottom: 48px;
+  }
+
+  /* ── LED MODULE CARDS ── */
+  .modules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .card-wrap {
+    position: relative;
+    border-radius: 12px;
+  }
+
+  .card-wrap::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: 14px;
+    background: conic-gradient(
+      from var(--angle),
+      #FF6B1A 0%,
+      #FF6B1A 8%,
+      transparent 18%,
+      transparent 43%,
+      #00D4FF 48%,
+      #00D4FF 58%,
+      transparent 68%,
+      transparent 93%,
+      #FF6B1A 100%
+    );
+    animation: spin 4s linear infinite;
+    z-index: 0;
+  }
+
+  .card-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    border-radius: 11px;
+    background: #0f0f0f;
+    z-index: 1;
+  }
+
+  @keyframes spin {
+    to { --angle: 360deg; }
+  }
+
+  .card-wrap:nth-child(2)::before { animation-delay: -1s; }
+  .card-wrap:nth-child(3)::before { animation-delay: -2s; }
+  .card-wrap:nth-child(4)::before { animation-delay: -3s; }
+  .card-wrap:nth-child(5)::before { animation-delay: -0.5s; }
+  .card-wrap:nth-child(6)::before { animation-delay: -1.5s; }
+
+  .module-card {
+    position: relative;
+    z-index: 2;
+    padding: 22px 18px;
+    border-radius: 10px;
+  }
+
+  .module-icon {
+    font-size: 28px;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .module-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+
+  .module-desc {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.5;
+    margin-bottom: 14px;
+  }
+
+  .module-tag {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    background: rgba(255,107,26,0.1);
+    color: var(--orange);
+    border: 1px solid rgba(255,107,26,0.25);
+    text-transform: uppercase;
+  }
+
+  /* ── HOW IT WORKS ── */
+  .steps {
+    padding: 0 24px 80px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .steps-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px 0;
+    border-bottom: 1px solid #1a1a1a;
+    position: relative;
+  }
+
+  .step:last-child { border-bottom: none; }
+
+  .step-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: #1a1a1a;
+    line-height: 1;
+    min-width: 52px;
+    transition: color 0.3s;
+  }
+
+  .step:hover .step-num { color: var(--orange); }
+
+  .step-content {}
+
+  .step-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .step-desc {
+    font-size: 13px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* ── MANIFESTO BAND ── */
+  .manifesto {
+    background: var(--orange);
+    padding: 48px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .manifesto::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 20px,
+      rgba(0,0,0,0.03) 20px,
+      rgba(0,0,0,0.03) 40px
+    );
+  }
+
+  .manifesto-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(20px, 5vw, 32px);
+    font-weight: 900;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    line-height: 1.3;
+    position: relative;
+  }
+
+  /* ── FREE BANNER ── */
+  .free-section {
+    padding: 80px 24px;
+    max-width: 700px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .free-badge {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--cyan);
+    border: 1px solid var(--cyan);
+    padding: 6px 16px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .free-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(36px, 8vw, 64px);
+    font-weight: 900;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .free-title span { color: var(--cyan); }
+
+  .free-sub {
+    font-size: 15px;
+    color: #777;
+    max-width: 380px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #050505;
+    border-top: 1px solid #111;
+    padding: 40px 24px;
+    text-align: center;
+  }
+
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+  }
+
+  .footer-logo span:first-child { color: #fff; }
+  .footer-logo span:last-child { color: var(--orange); }
+
+  .footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .footer-socials a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #444;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .footer-socials a:hover { color: var(--orange); }
+
+  .footer-manifesto {
+    font-size: 12px;
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .footer-copy {
+    font-size: 11px;
+    color: #444;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+  .reveal-delay-6 { transition-delay: 0.6s; }
+
+  /* ── TICKER ── */
+  .ticker {
+    background: var(--orange);
+    padding: 10px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-track {
+    display: inline-flex;
+    animation: ticker 25s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #000;
+    padding: 0 28px;
+  }
+
+  .ticker-dot {
+    color: rgba(0,0,0,0.3);
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── PHONE MOCKUP ── */
+  .phone-section {
+    padding: 60px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .phone-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,212,255,0.04) 0%, transparent 70%);
+  }
+
+  .phone-mockup {
+    position: relative;
+    width: 220px;
+    filter: drop-shadow(0 0 40px rgba(0,212,255,0.15)) drop-shadow(0 0 80px rgba(255,107,26,0.08));
+    animation: float-phone 4s ease-in-out infinite;
+  }
+
+  @keyframes float-phone {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .phone-frame {
+    width: 220px;
+    background: #0d0d0d;
+    border-radius: 36px;
+    border: 2px solid #2a2a2a;
+    padding: 12px;
+    position: relative;
+  }
+
+  .phone-notch {
+    width: 60px;
+    height: 6px;
+    background: #1a1a1a;
+    border-radius: 3px;
+    margin: 0 auto 10px;
+  }
+
+  .phone-screen {
+    background: #000;
+    border-radius: 24px;
+    overflow: hidden;
+    aspect-ratio: 9/16;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .phone-topbar {
+    background: #000;
+    padding: 8px 12px 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #111;
+  }
+
+  .phone-topbar-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--cyan);
+  }
+
+  .phone-content {
+    flex: 1;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .phone-section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #444;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .phone-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+
+  .phone-card {
+    background: #111;
+    border: 1px solid #1f1f1f;
+    border-radius: 6px;
+    padding: 8px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .phone-card-icon { font-size: 14px; }
+
+  .phone-card-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 7px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: var(--cyan);
+    text-transform: uppercase;
+  }
+
+  .phone-card-sub {
+    font-size: 6px;
+    color: #444;
+  }
+
+  .phone-navbar {
+    background: #050505;
+    border-top: 1px solid #1a1a1a;
+    padding: 6px 8px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .phone-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+    font-size: 6px;
+    color: #333;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .phone-nav-item.active { color: var(--orange); }
+  .phone-nav-icon { font-size: 12px; }
+
+  .phone-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50px;
+    background: conic-gradient(from var(--angle), #FF6B1A, #00D4FF, #FF6B1A);
+    animation: spin 4s linear infinite;
+    z-index: -1;
+    opacity: 0.15;
+    filter: blur(20px);
+  }
+
+  /* ── QUOTES ── */
+  .quotes-section {
+    padding: 60px 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .quotes-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .quote-card {
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    border-left: 3px solid var(--orange);
+    border-radius: 8px;
+    padding: 20px 18px;
+  }
+
+  .quote-text {
+    font-size: 14px;
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 12px;
+    font-style: italic;
+  }
+
+  .quote-author {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: var(--orange);
+    text-transform: uppercase;
+  }
+
+  .quote-trade {
+    font-size: 11px;
+    color: #444;
+    margin-top: 2px;
+  }
+
+  /* ── WHO IS IT FOR ── */
+  .trades-section {
+    padding: 60px 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .trades-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 32px;
+  }
+
+  .trade-chip {
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    border-radius: 8px;
+    padding: 16px 10px;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .trade-chip:hover {
+    border-color: var(--orange);
+    background: rgba(255,107,26,0.05);
+  }
+
+  .trade-chip-icon { font-size: 22px; margin-bottom: 6px; display: block; }
+
+  .trade-chip-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: #666;
+    text-transform: uppercase;
+  }
+
+  /* ── COMING SOON ── */
+  .coming-section {
+    padding: 60px 24px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .coming-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 32px;
+  }
+
+  .coming-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #0a0a0a;
+    border: 1px solid #151515;
+    border-radius: 8px;
+    padding: 16px 18px;
+  }
+
+  .coming-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 16px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #333;
+    text-transform: uppercase;
+  }
+
+  .coming-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 4px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+  }
+
+  .coming-badge.soon {
+    background: rgba(0,212,255,0.08);
+    color: var(--cyan);
+    border: 1px solid rgba(0,212,255,0.2);
+  }
+
+  .coming-badge.premium {
+    background: rgba(255,107,26,0.08);
+    color: var(--orange);
+    border: 1px solid rgba(255,107,26,0.2);
+  }
+
+  /* ── CARD HOVER ── */
+  .card-wrap {
+    transition: transform 0.2s;
+  }
+
+  .card-wrap:hover {
+    transform: scale(1.03);
+  }
+
+  .card-wrap:hover::before {
+    animation-duration: 1.5s;
+  }
+
+</style>
 </head>
 <body>
-  <nav>
-    <div class="nav-logo">
-      <img src="logo.png" alt="HardYard" />
-      <span class="nav-wordmark">HARD<span>YARD</span></span>
-    </div>
-    <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="nav-cta">Open App</a>
-  </nav>
-  <section class="hero">
-    <div class="hero-badge">Now Live — Free to Use</div>
-    <img src="logo.png" alt="HardYard Shield" class="hero-logo" />
-    <h1>
-      <span class="line-orange">Hard</span>
-      <span class="line-cyan">Yard</span>
-    </h1>
-    <p class="hero-tagline">Built by the Graft. Protected by the Shield.</p>
-    <div class="hero-actions">
-      <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="btn-primary">Launch the App →</a>
-      <span class="hero-sub">No download needed &nbsp;·&nbsp; Works on any phone</span>
-    </div>
-  </section>
-  <section>
-    <div class="section-inner">
-      <p class="section-label reveal">Everything You Need on Site</p>
-      <h2 class="section-title reveal">Six Modules.<br><span>One App.</span></h2>
-      <p class="section-body reveal">Built specifically for tradespeople. Every tool you need to protect your gear, record your work, stay safe, and run your jobs — all in one place.</p>
-      <div class="modules-grid">
-        <div class="module-card reveal"><span class="module-icon">🛡️</span><div class="module-name">The Shield</div><div class="module-desc">Register your tools, QR scan, stolen alerts and police-ready documentation.</div><span class="module-tag">Tool Protection</span></div>
-        <div class="module-card reveal"><span class="module-icon">🏪</span><div class="module-name">The Yard</div><div class="module-desc">Buy and sell tools, materials and equipment with tradespeople near you.</div><span class="module-tag">Marketplace</span></div>
-        <div class="module-card reveal"><span class="module-icon">🆘</span><div class="module-name">Safety Command</div><div class="module-desc">SOS alerts with live GPS, emergency contacts, and a loud site siren.</div><span class="module-tag">Site Safety</span></div>
-        <div class="module-card reveal"><span class="module-icon">📋</span><div class="module-name">The Vault</div><div class="module-desc">Job records, receipts, PDF export and WhatsApp share — your paper trail sorted.</div><span class="module-tag">Job Records</span></div>
-        <div class="module-card reveal"><span class="module-icon">🔧</span><div class="module-name">Site Tools</div><div class="module-desc">14 trade calculators — concrete, drainage, paving, backfill, decking and more.</div><span class="module-tag">14 Calculators</span></div>
-        <div class="module-card reveal"><span class="module-icon">📍</span><div class="module-name">Jobs & Notes</div><div class="module-desc">Site management with reverse geocoding, job tracking, and quick site notes.</div><span class="module-tag">Site Management</span></div>
-      </div>
-    </div>
-  </section>
-  <section class="pricing-section">
-    <div class="section-inner">
-      <p class="section-label reveal">Pricing</p>
-      <h2 class="section-title reveal">No Subscription. No Hidden Costs.<br><span>No Lock-In.</span></h2>
-      <p class="section-body reveal">Other trade apps charge a monthly fee just to access the basics. HardYard's core modules are yours from day one — no card required.</p>
-      <div class="pricing-grid reveal">
-        <div class="price-card hardyard">
-          <div class="price-brand">HardYard</div>
-          <div class="price-amount">£0</div>
-          <div class="price-period">to get started</div>
-          <ul class="price-features">
-            <li>All 6 modules included</li>
-            <li>Unlimited tool registrations</li>
-            <li>Stolen alerts nationwide</li>
-            <li>14 site calculators</li>
-            <li>Full job records & PDF export</li>
-            <li>Marketplace access</li>
-          </ul>
-        </div>
-        <div class="price-card competitor">
-          <div class="price-brand">Competitors</div>
-          <div class="price-amount">£££</div>
-          <div class="price-period">per month, per user</div>
-          <ul class="price-features">
-            <li>Basic tool tracking</li>
-            <li>Limited features on free tier</li>
-            <li>Subscription required</li>
-          </ul>
-        </div>
-      </div>
-      <p class="price-note reveal">* Competitor pricing based on publicly available information.</p>
-    </div>
-  </section>
-  <section>
-    <div class="section-inner">
-      <p class="section-label reveal">Getting Started</p>
-      <h2 class="section-title reveal">Up and Running<br><span>in 3 Steps</span></h2>
-      <div class="steps">
-        <div class="step reveal"><div class="step-num">1</div><div class="step-content"><div class="step-title">Open the App</div><div class="step-desc">No download needed. HardYard runs in your mobile browser — just tap the link and you're in.</div></div></div>
-        <div class="step reveal"><div class="step-num">2</div><div class="step-content"><div class="step-title">Create Your Account</div><div class="step-desc">Quick signup with your email. Your data is stored securely and syncs across devices.</div></div></div>
-        <div class="step reveal"><div class="step-num">3</div><div class="step-content"><div class="step-title">Register Your Tools</div><div class="step-desc">Start with The Shield — scan or photograph your tools to build your protected inventory. Then explore the rest.</div></div></div>
-      </div>
-    </div>
-  </section>
-  <div class="cta-band">
-    <h2 class="reveal">Your Yard.<br><span>Your Rules.</span></h2>
-    <p class="reveal">Join tradespeople already protecting their gear with HardYard.</p>
-    <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="btn-primary reveal">Launch the App →</a>
+
+<!-- NAVBAR -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="HardYard" class="nav-shield" style="width:40px; height:40px; object-fit:contain;">
+    <div class="nav-logo-text"><span>HARD</span><span>YARD</span></div>
+  </a>
+  <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="nav-cta" target="_blank">OPEN APP</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="sparks" id="sparks"></div>
+
+  <div class="hero-eyebrow reveal">Built for anyone who grafts</div>
+
+  <h1 class="hero-title reveal">
+    <span class="line1">The Operating</span>
+    <span class="line2">System</span>
+    <span class="line3">for trades</span>
+  </h1>
+
+  <p class="hero-sub reveal">
+    Protect your tools. Record your jobs. Stay safe on site.<br>
+    <strong>For trades, DIYers, and everyone in between.</strong>
+  </p>
+
+  <div class="hero-btns reveal">
+    <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="btn-primary" target="_blank">GET STARTED</a>
+    <a href="#modules" class="btn-secondary">SEE WHAT'S INSIDE</a>
   </div>
-  <footer>
-    <div class="footer-logo">
-      <img src="logo.png" alt="HardYard" />
-      <span class="footer-wordmark">HARD<span>YARD</span></span>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrapper">
+  <div class="grinder-sparks" id="grinder-sparks"></div>
+  <div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Groundworkers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Landscapers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Electricians</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Plumbers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Builders</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Roofers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Plasterers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Joiners</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Tilers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Painters</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Groundworkers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Landscapers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Electricians</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Plumbers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Builders</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Roofers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Plasterers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Joiners</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Tilers</span><span class="ticker-item ticker-dot">·</span>
+    <span class="ticker-item">Painters</span><span class="ticker-item ticker-dot">·</span>
+  </div>
+</div>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-inner">
+    <div class="stat reveal reveal-delay-1">
+      <div class="stat-num">6</div>
+      <div class="stat-label">Modules</div>
     </div>
-    <p class="footer-manifesto">Built by the Graft. Protected by the Shield. This is your yard. We just built the fence.</p>
-    <div class="footer-links">
-      <a href="mailto:hello@hardyardhq.com">hello@hardyardhq.com</a>
-      <a href="https://hardyard-hq.github.io/Hardyard_pro/">Launch App</a>
+    <div class="stat reveal reveal-delay-2">
+      <div class="stat-num">14</div>
+      <div class="stat-label">Calculators</div>
     </div>
-    <div class="footer-social">
-      <a href="https://www.instagram.com/hardyardhq" class="social-pill" target="_blank" rel="noopener">Instagram</a>
-      <a href="https://www.tiktok.com/@hardyardhq" class="social-pill" target="_blank" rel="noopener">TikTok</a>
-      <a href="https://www.facebook.com/hardyardhq" class="social-pill" target="_blank" rel="noopener">Facebook</a>
-      <a href="https://x.com/hardyardhq" class="social-pill" target="_blank" rel="noopener">X</a>
-      <a href="https://www.youtube.com/@hardyardhq" class="social-pill" target="_blank" rel="noopener">YouTube</a>
+    <div class="stat reveal reveal-delay-3">
+      <div class="stat-num">🌍</div>
+      <div class="stat-label">Built for trades</div>
     </div>
-    <p class="footer-copy">© 2026 HardYard. All rights reserved.</p>
-  </footer>
-  <script>
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-  </script>
+    <div class="stat reveal reveal-delay-4">
+      <div class="stat-num">2026</div>
+      <div class="stat-label">Launched</div>
+    </div>
+  </div>
+</div>
+
+<!-- PHONE MOCKUP -->
+<div class="phone-section">
+  <div class="phone-mockup">
+    <div class="phone-glow"></div>
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen" style="background:#0a0a0a; border-radius:24px; overflow:hidden; display:flex; flex-direction:column;">
+        <!-- Top bar -->
+        <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 12px 6px; background:#0a0a0a;">
+          <span style="font-family:'Barlow Condensed',sans-serif; font-size:16px; font-weight:900; color:#00D4FF; letter-spacing:1px;">HardYard</span>
+          <span style="font-size:10px; color:#888;">13°C ☁️</span>
+        </div>
+        <!-- Content -->
+        <div style="flex:1; overflow:hidden; padding:0 8px 6px;">
+          <!-- Active Modules label -->
+          <div style="font-size:7px; color:#666; letter-spacing:2px; font-weight:700; margin-bottom:6px; padding-left:2px;">ACTIVE MODULES</div>
+          <!-- Module grid -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px; margin-bottom:8px;">
+            <div style="background:#111; border:1px solid #222; border-radius:6px; padding:8px 7px;">
+              <div style="font-size:14px; margin-bottom:3px;">🛡️</div>
+              <div style="font-size:8px; font-weight:900; color:#00D4FF; letter-spacing:1px;">THE SHIELD</div>
+              <div style="font-size:7px; color:#555; margin-top:1px;">3 Protected</div>
+            </div>
+            <div style="background:#111; border:1px solid #222; border-radius:6px; padding:8px 7px;">
+              <div style="font-size:14px; margin-bottom:3px;">🏗️</div>
+              <div style="font-size:8px; font-weight:900; color:#00D4FF; letter-spacing:1px;">THE YARD</div>
+              <div style="font-size:7px; color:#555; margin-top:1px;">4 Near You</div>
+            </div>
+            <div style="background:#111; border:1px solid #222; border-radius:6px; padding:8px 7px;">
+              <div style="font-size:14px; margin-bottom:3px;">🆘</div>
+              <div style="font-size:8px; font-weight:900; color:#ff3333; letter-spacing:1px;">SAFETY</div>
+              <div style="font-size:7px; color:#555; margin-top:1px;">GPS Active</div>
+            </div>
+            <div style="background:#111; border:1px solid #222; border-radius:6px; padding:8px 7px;">
+              <div style="font-size:14px; margin-bottom:3px;">🗄️</div>
+              <div style="font-size:8px; font-weight:900; color:#00D4FF; letter-spacing:1px;">VAULT</div>
+              <div style="font-size:7px; color:#555; margin-top:1px;">Last: Paving</div>
+            </div>
+          </div>
+          <!-- Quick Calc label -->
+          <div style="font-size:7px; color:#666; letter-spacing:2px; font-weight:700; margin-bottom:6px; padding-left:2px;">QUICK CALC</div>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:5px;">
+            <div style="background:#111; border:1px solid #222; border-radius:6px; padding:8px 7px;">
+              <div style="font-size:14px; margin-bottom:3px;">🚜</div>
+              <div style="font-size:8px; font-weight:900; color:#FF6B1A; letter-spacing:1px;">MUCK AWAY</div>
+            </div>
+            <div style="background:#111; border:1px solid #222; border-radius:6px; padding:8px 7px;">
+              <div style="font-size:14px; margin-bottom:3px;">🧱</div>
+              <div style="font-size:8px; font-weight:900; color:#FF6B1A; letter-spacing:1px;">BRICKS</div>
+            </div>
+          </div>
+        </div>
+        <!-- Bottom nav -->
+        <div style="display:flex; justify-content:space-around; align-items:center; padding:6px 4px 8px; background:#0d0d0d; border-top:1px solid #1a1a1a;">
+          <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
+            <span style="font-size:11px;">🏠</span>
+            <span style="font-size:6px; color:#FF6B1A; font-weight:700;">HUB</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
+            <span style="font-size:11px;">🚨</span>
+            <span style="font-size:6px; color:#555;">SAFETY</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#00D4FF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20 L4 4 L20 20 Z"/><path d="M4 16 L8 16" opacity="0.6"/><path d="M4 12 L8 12" opacity="0.6"/><path d="M4 8 L6 8" opacity="0.6"/></svg>
+            <span style="font-size:6px; color:#555;">MEASURE</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
+            <span style="font-size:11px;">🏗️</span>
+            <span style="font-size:6px; color:#555;">YARD</span>
+          </div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:1px;">
+            <span style="font-size:11px;">📋</span>
+            <span style="font-size:6px; color:#555;">JOBS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODULES -->
+<div id="modules" class="section">
+  <div class="section-eyebrow reveal">What's inside</div>
+  <h2 class="section-title reveal">Six modules.<br><span>Built for the yard.</span></h2>
+  <p class="section-body reveal">Every tool you need — from protecting gear against theft to buying and selling equipment locally. Built for trades, DIYers, and anyone who takes their tools seriously.</p>
+</div>
+
+<div class="modules-grid">
+
+  <div class="card-wrap reveal reveal-delay-1">
+    <div class="module-card">
+      <span class="module-icon">🛡️</span>
+      <div class="module-name">The Shield</div>
+      <div class="module-desc">Register tools, QR scan, stolen alerts and police-ready documentation.</div>
+      <span class="module-tag">Tool Protection</span>
+    </div>
+  </div>
+
+  <div class="card-wrap reveal reveal-delay-2">
+    <div class="module-card">
+      <span class="module-icon">🏗️</span>
+      <div class="module-name">The Yard</div>
+      <div class="module-desc">Buy and sell tools, materials and equipment with tradespeople near you.</div>
+      <span class="module-tag">Marketplace</span>
+    </div>
+  </div>
+
+  <div class="card-wrap reveal reveal-delay-3">
+    <div class="module-card">
+      <span class="module-icon">🗄️</span>
+      <div class="module-name">The Vault</div>
+      <div class="module-desc">Save calculations to jobs, attach site photos, and share full material reports via WhatsApp or PDF.</div>
+      <span class="module-tag">Job Records</span>
+    </div>
+  </div>
+
+  <div class="card-wrap reveal reveal-delay-4">
+    <div class="module-card">
+      <span class="module-icon">🆘</span>
+      <div class="module-name">Safety Hub</div>
+      <div class="module-desc">SOS alerts, GPS location and emergency contacts always ready.</div>
+      <span class="module-tag">Stay Safe</span>
+    </div>
+  </div>
+
+  <div class="card-wrap reveal reveal-delay-5">
+    <div class="module-card">
+      <span class="module-icon">📐</span>
+      <div class="module-name">Site Tools</div>
+      <div class="module-desc">14 trade calculators for groundworks, landscaping, finishing and more.</div>
+      <span class="module-tag">Calculators</span>
+    </div>
+  </div>
+
+  <div class="card-wrap reveal reveal-delay-6">
+    <div class="module-card">
+      <span class="module-icon">📋</span>
+      <div class="module-name">Jobs</div>
+      <div class="module-desc">Manage active sites, calendar view, tag tools and vault records to jobs.</div>
+      <span class="module-tag">Site Management</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <div class="section-eyebrow reveal">Simple as</div>
+  <h2 class="section-title reveal">How it <span>works</span></h2>
+</div>
+
+<div class="steps">
+  <div class="steps-grid">
+    <div class="step reveal">
+      <div class="step-num">01</div>
+      <div class="step-content">
+        <div class="step-title">Open the app</div>
+        <div class="step-desc">No download needed. HardYard runs in your browser — just open the link and register in seconds.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">02</div>
+      <div class="step-content">
+        <div class="step-title">Register your tools</div>
+        <div class="step-desc">Scan serial numbers with your camera, add photos and values. Your gear is protected from day one.</div>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-num">03</div>
+      <div class="step-content">
+        <div class="step-title">Run your jobs</div>
+        <div class="step-desc">Create jobs, tag tools and vault records, use the site calculators. Everything linked, everything saved.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BETA QUOTES -->
+<div class="quotes-section">
+  <div class="section-eyebrow reveal">Beta testers say</div>
+  <h2 class="section-title reveal">Real lads.<br><span>Real feedback.</span></h2>
+  <div class="quotes-grid">
+    <div class="quote-card reveal">
+      <div class="quote-text">"The measuring tools are spot on, and getting an instant materials list saves so much graft. Being able to link those measurements directly to a specific job is brilliant. Having the calendar to log start dates and job duration, plus the tool scanner to protect your gear — HardYard has everything you need on site."</div>
+      <div class="quote-author">Lukasz G.</div>
+    </div>
+    <div class="quote-card reveal">
+      <div class="quote-text">"If you're on site, you need this app. The measuring tools are top quality, the materials list saves you doing the mental math, and the tool scanner gives you peace of mind for your gear. Can't fault it."</div>
+      <div class="quote-author">Gary H.</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHO IS IT FOR -->
+<div class="trades-section">
+  <div class="section-eyebrow reveal">Who is it for</div>
+  <h2 class="section-title reveal">If you own tools,<br><span>it's for you.</span></h2>
+  <div class="trades-grid">
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🔨</span>
+      <div class="trade-chip-label">DIYers</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🏡</span>
+      <div class="trade-chip-label">Homeowners</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">⛏️</span>
+      <div class="trade-chip-label">Groundworkers</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🌿</span>
+      <div class="trade-chip-label">Landscapers</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">⚡</span>
+      <div class="trade-chip-label">Electricians</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🔧</span>
+      <div class="trade-chip-label">Plumbers</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🏗️</span>
+      <div class="trade-chip-label">Builders</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🏠</span>
+      <div class="trade-chip-label">Roofers</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🪟</span>
+      <div class="trade-chip-label">Joiners</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🎨</span>
+      <div class="trade-chip-label">Painters</div>
+    </div>
+    <div class="trade-chip reveal">
+      <span class="trade-chip-icon">🪣</span>
+      <div class="trade-chip-label">Plasterers</div>
+    </div>
+  </div>
+</div>
+
+<!-- COMING SOON -->
+<div class="coming-section">
+  <div class="section-eyebrow reveal">What's coming</div>
+  <h2 class="section-title reveal">The yard<br><span>keeps growing.</span></h2>
+  <p class="section-body reveal" style="margin-bottom:24px;">More features are on the way — including premium tools for power users who want to go further.</p>
+  <div class="coming-grid">
+    <div class="coming-item reveal">
+      <div class="coming-name">CSCS Card Wallet</div>
+      <span class="coming-badge soon">Coming Soon</span>
+    </div>
+    <div class="coming-item reveal">
+      <div class="coming-name">Calendar Phone Sync</div>
+      <span class="coming-badge soon">Coming Soon</span>
+    </div>
+    <div class="coming-item reveal">
+      <div class="coming-name">AI Tool Recognition</div>
+      <span class="coming-badge soon">Coming Soon</span>
+    </div>
+    <div class="coming-item reveal">
+      <div class="coming-name">The Arena</div>
+      <span class="coming-badge soon">Coming Soon</span>
+    </div>
+  </div>
+</div>
+
+<!-- MANIFESTO -->
+<div class="manifesto">
+  <div class="manifesto-text">
+    Built by the graft.<br>Protected by the shield.<br>This is your yard.<br>We just built the fence.
+  </div>
+</div>
+
+<!-- CTA SECTION -->
+<div class="free-section">
+  <div class="free-badge reveal">Now live</div>
+  <h2 class="free-title reveal">Your yard.<br><span>Your rules.</span></h2>
+  <p class="free-sub reveal">HardYard is built by people who use tools, for people who use tools. Everything you need to run smarter — wherever you are in the world.</p>
+  <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="btn-primary reveal" target="_blank">OPEN THE APP</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo"><span>HARD</span><span>YARD</span></div>
+  <div class="footer-socials">
+    <a href="https://instagram.com/hardyardhq" target="_blank">Instagram @hardyardhq</a>
+    <a href="https://tiktok.com/@hardyardhq" target="_blank">TikTok @hardyardhq</a>
+    <a href="https://x.com/hardyardhq" target="_blank">X @hardyardhq</a>
+    <a href="https://youtube.com/@hardyardhq" target="_blank">YouTube @hardyardhq</a>
+    <a href="https://facebook.com/hardyardhq" target="_blank">Facebook @hardyardhq</a>
+  </div>
+  <div class="footer-manifesto">Built by the graft. Protected by the shield.</div>
+  <div class="footer-copy">© 2026 HardYard — All Rights Reserved · hello@hardyardhq.com</div>
+</footer>
+
+<script>
+  // Hero background sparks (subtle floating)
+  const sparksEl = document.getElementById('sparks');
+  const colors = ['#FF6B1A', '#FF8C42', '#00D4FF', '#00EEFF', '#ffffff', '#FFB347'];
+  for (let i = 0; i < 60; i++) {
+    const spark = document.createElement('div');
+    spark.className = 'spark';
+    spark.style.cssText = `
+      left: ${Math.random() * 100}%;
+      bottom: 0;
+      background: ${colors[Math.floor(Math.random() * colors.length)]};
+      animation-duration: ${3 + Math.random() * 6}s;
+      animation-delay: ${Math.random() * 6}s;
+      --drift: ${(Math.random() - 0.5) * 150}px;
+      opacity: ${0.7 + Math.random() * 0.3};
+      width: ${2 + Math.random() * 3}px;
+      height: ${2 + Math.random() * 3}px;
+      box-shadow: 0 0 6px 2px ${colors[Math.floor(Math.random() * colors.length)]};
+    `;
+    sparksEl.appendChild(spark);
+  }
+
+  // Industrial grinder sparks off ticker
+  const grinderContainer = document.getElementById('grinder-sparks');
+  const sparkColors = ['#FF6B1A', '#FF8C00', '#FFB347', '#ffffff', '#FFDD44', '#FF4500'];
+
+  function shootSpark() {
+    const spark = document.createElement('div');
+    spark.className = 'gspark';
+
+    const x = 10 + Math.random() * 80; // position along ticker width
+    const angle = -90 + (Math.random() - 0.5) * 140; // shoot mostly upward with spread
+    const rad = angle * Math.PI / 180;
+    const dist = 30 + Math.random() * 80;
+    const tx = Math.sin(rad) * dist;
+    const ty = -Math.abs(Math.cos(rad)) * dist - Math.random() * 40;
+    const dur = 0.3 + Math.random() * 0.5;
+    const color = sparkColors[Math.floor(Math.random() * sparkColors.length)];
+    const size = 1.5 + Math.random() * 3;
+
+    spark.style.cssText = `
+      left: ${x}%;
+      top: ${Math.random() > 0.5 ? '0%' : '100%'};
+      width: ${size}px;
+      height: ${size}px;
+      background: ${color};
+      box-shadow: 0 0 ${size * 2}px ${color};
+      --x: ${x}%;
+      --tx: ${tx}px;
+      --ty: ${ty}px;
+      --dur: ${dur}s;
+    `;
+
+    grinderContainer.appendChild(spark);
+    setTimeout(() => spark.remove(), dur * 1000);
+  }
+
+  // Fire bursts of sparks continuously
+  function sparkBurst() {
+    const count = 3 + Math.floor(Math.random() * 5);
+    for (let i = 0; i < count; i++) {
+      setTimeout(shootSpark, i * 30);
+    }
+    setTimeout(sparkBurst, 150 + Math.random() * 300);
+  }
+
+  sparkBurst();
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
 </body>
 </html>
