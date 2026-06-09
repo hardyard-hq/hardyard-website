@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — HardYard</title>
+    <meta name="description" content="Frequently asked questions about HardYard — the free app built for UK tradespeople.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* NAV */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            border-bottom: 1px solid #222;
+            position: sticky;
+            top: 0;
+            background: #000;
+            z-index: 100;
+        }
+
+        .nav-logo {
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .nav-logo span { color: #FF6B1A; }
+
+        .nav-cta {
+            background: #FF6B1A;
+            color: #000;
+            padding: 10px 20px;
+            font-weight: 900;
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        /* HERO */
+        .hero {
+            text-align: center;
+            padding: 60px 20px 40px;
+            border-bottom: 1px solid #111;
+        }
+
+        .hero-label {
+            font-size: 11px;
+            color: #00D4FF;
+            letter-spacing: 4px;
+            font-weight: 900;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 6vw, 56px);
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 16px;
+            color: #888;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* FAQ SECTION */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .faq-item {
+            border: 1px solid #1a1a1a;
+            border-radius: 8px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .faq-item:hover {
+            border-color: #333;
+        }
+
+        .faq-question {
+            width: 100%;
+            background: #0a0a0a;
+            border: none;
+            color: #fff;
+            padding: 20px 24px;
+            text-align: left;
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .faq-question:hover {
+            background: #111;
+        }
+
+        .faq-question.active {
+            color: #00D4FF;
+            border-bottom: 1px solid #1a1a1a;
+        }
+
+        .faq-icon {
+            color: #FF6B1A;
+            font-size: 20px;
+            font-weight: 900;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+
+        .faq-question.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 20px 24px;
+            background: #050505;
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        .faq-answer.open {
+            display: block;
+        }
+
+        .faq-answer strong {
+            color: #fff;
+        }
+
+        .faq-answer a {
+            color: #00D4FF;
+            text-decoration: none;
+        }
+
+        .faq-answer a:hover {
+            text-decoration: underline;
+        }
+
+        .highlight {
+            color: #FF6B1A;
+            font-weight: bold;
+        }
+
+        .cyan {
+            color: #00D4FF;
+            font-weight: bold;
+        }
+
+        /* SECTION DIVIDERS */
+        .section-label {
+            font-size: 10px;
+            color: #444;
+            letter-spacing: 4px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin: 50px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #111;
+        }
+
+        /* CTA BLOCK */
+        .cta-block {
+            background: linear-gradient(135deg, rgba(255,107,26,0.08), rgba(0,212,255,0.08));
+            border: 1px solid #222;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+
+        .cta-block h2 {
+            font-size: 24px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .cta-block p {
+            color: #888;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: #FF6B1A;
+            color: #000;
+            padding: 16px 40px;
+            font-weight: 900;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid #111;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-logo {
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .footer-links a:hover {
+            color: #00D4FF;
+        }
+
+        .trademark-notice {
+            font-size: 10px;
+            color: #333;
+            max-width: 600px;
+            margin: 15px auto 0;
+            line-height: 1.6;
+        }
+
+        .trademark-notice span {
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="nav-logo">Hard<span>Yard</span></a>
+        <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="nav-cta">ENTER THE YARD</a>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-label">Frequently Asked Questions</div>
+        <h1>Got Questions?<br>We've Got Answers.</h1>
+        <p>No corporate waffle. Just straight answers about what HardYard is, what it does, and why it's free.</p>
+    </div>
+
+    <!-- FAQ CONTENT -->
+    <div class="faq-container">
+
+        <div class="section-label">The Basics</div>
+
+        <!-- Q1 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Is HardYard free?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>Yes. Completely free.</strong> No credit card. No trial period. No hidden charges. Every module — The Shield, Site Tools, The Vault, The Yard, Jobs, Notes, Safety Command and the CSCS Card Wallet — is free to use. <br><br>
+                A premium tier is coming in the future with advanced features. But the core app that protects your tools, runs your site calculations and manages your jobs will always be free.
+            </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Does it work on iPhone and Android?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>Yes — both.</strong> HardYard works on any smartphone with a modern browser. iPhone, Android, Samsung, whatever you're carrying on site. No compatibility issues.
+            </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Do I need to download it from an app store?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>No app store needed.</strong> HardYard is a Progressive Web App (PWA) — you open it in your browser and install it straight to your home screen in one tap. No waiting for Apple or Google to approve updates. No storage eating downloads.<br><br>
+                <strong>On Android:</strong> Open the app in Chrome, tap the three dots menu, select "Add to Home Screen".<br><br>
+                <strong>On iPhone:</strong> Open in Safari, tap the Share button, select "Add to Home Screen".<br><br>
+                It'll sit on your home screen and open like a normal app.
+            </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Does it work offline?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>Yes.</strong> Once you've opened the app, it caches itself on your device. All 14 site calculators work offline. Your saved vault records, notes and CSCS card are available offline. The Safety SOS button works offline.<br><br>
+                Features that need a live connection — The Yard marketplace, live job syncing and stolen tool alerts — will resume automatically when signal is restored.<br><br>
+                A banner at the top of the app lets you know when you're offline so there's no confusion.
+            </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                What trades is it for?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                HardYard was built first and foremost for <strong>groundworkers and landscapers</strong> — the calculators reflect that. But the tool protection, job management, marketplace and safety features are useful for any trade on site.<br><br>
+                Brickies, concreters, fencers, pavers, drainage contractors, plasterers, painters, tilers, roofers, electricians, plumbers — if you work on a site and own tools, HardYard is for you.<br><br>
+                More trade-specific calculators are being added based on user feedback. Tell us what you need.
+            </div>
+        </div>
+
+        <div class="section-label">The Shield & Tool Protection</div>
+
+        <!-- Q6 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                What is The Shield?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>The Shield is HardYard's tool protection system.</strong> You register each tool with its name, serial number, estimated value, a photo and a receipt if you have one. That data is encrypted and stored securely against your account.<br><br>
+                If your tools get lifted, you can generate a full <strong>Police Pack PDF</strong> in one tap — a professional document with serial numbers, photos, values and your details, ready to hand to the police or your insurance company.<br><br>
+                You can also mark a tool as stolen which triggers a live alert to other HardYard users in your area. If someone tries to register that serial number on another account, it flags immediately.
+            </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                What happens if my tools get stolen?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                Open The Shield, find the tool, tap <strong>Mark as Stolen</strong>. That triggers three things:<br><br>
+                1. A live stolen alert goes out to other HardYard users nearby.<br>
+                2. The serial number is flagged — if anyone tries to register it on another account, HardYard catches it.<br>
+                3. You can generate a <strong>Police Pack PDF</strong> instantly — all your tool details, serial numbers, photos and proof of purchase in one professional document.<br><br>
+                The more tradespeople who register their tools on The Shield, the harder it becomes to sell stolen kit. That's the network effect.
+            </div>
+        </div>
+
+        <div class="section-label">The App</div>
+
+        <!-- Q8 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                What is the CSCS Card Wallet?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                The <strong>CSCS Card Wallet</strong> lets you store a digital copy of your CSCS card (or White Card in Australia, OSHA card in the US) directly in the app.<br><br>
+                Add your card number, card type, expiry date and photographs of the front and back. When a site manager asks to see your card, tap Show Card for a full-screen display — bright screen, easy to read, no fumbling in your wallet in the rain.<br><br>
+                The app will warn you when your card is approaching its expiry date so you never get turned away at the gate.
+            </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Is my data safe?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>Yes.</strong> HardYard takes data protection seriously.<br><br>
+                • Your account data is stored on <strong>Supabase</strong> — a secure, enterprise-grade database platform with row-level security. Only you can access your records.<br>
+                • HardYard is registered with the <strong>ICO</strong> (Information Commissioner's Office) under the UK GDPR. Registration confirmed June 2026.<br>
+                • We do not sell your data. We do not share your data with third parties without your consent.<br>
+                • Tool photos and receipts are stored securely and are only accessible to your account.<br><br>
+                For full details see our <a href="privacy-policy.html">Privacy Policy</a>.
+            </div>
+        </div>
+
+        <div class="section-label">The Community</div>
+
+        <!-- Q10 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                What is the Founding 500?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                The <strong>Founding 500</strong> are the first 500 tradespeople to join HardYard. These are the people helping us build something better — testing features on real sites, telling us what works and what doesn't, and shaping the app's future.<br><br>
+                Founding 500 members get a <strong>permanent badge</strong> on their profile, a physical HardYard sticker pack, and their name in the Roll Call — a permanent record of the people who were here from the start.<br><br>
+                Once 500 spots are filled, the Founding 500 is closed. If you're reading this, there are still spots available.
+            </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Is there a premium version coming?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>Yes — but the core app stays free.</strong> A premium tier is in development with advanced features including AI-powered job assistance, unlimited cloud storage, advanced reporting and calendar sync with iPhone and Google Calendar.<br><br>
+                The free version will always include all the essential tools — calculators, tool protection, job management, the marketplace and safety features. Premium is for tradespeople who want to go further.<br><br>
+                Founding 500 members will be the first to know when premium launches and will receive a discounted rate as a thank you for being early.
+            </div>
+        </div>
+
+        <div class="section-label">Getting Started</div>
+
+        <!-- Q12 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                Who built HardYard?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                HardYard was built by a groundworker from Northern Ireland who got sick of losing tools, doing sums on the back of a van, and paying £30 a month for apps that didn't understand the trades. So he built his own.<br><br>
+                Started in December 2025. Launched June 2026. Built evenings and weekends around a full-time job on site.<br><br>
+                <span class="highlight">Built by the Graft. Protected by the Shield. This is your yard. We just built the fence.</span>
+            </div>
+        </div>
+
+        <!-- Q13 -->
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleFAQ(this)">
+                How do I register?
+                <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+                <strong>It takes about 60 seconds.</strong><br><br>
+                1. Open <a href="https://hardyard-hq.github.io/Hardyard_pro/">hardyard-hq.github.io/Hardyard_pro</a> in your browser.<br>
+                2. Tap Register and enter your email and a password.<br>
+                3. Add your name and trade in Settings.<br>
+                4. Start registering your tools in The Shield.<br><br>
+                No credit card. No subscription. No faff.
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-block">
+            <h2>READY TO ENTER THE YARD?</h2>
+            <p>Free to use. No app store needed. Works offline on site.</p>
+            <a href="https://hardyard-hq.github.io/Hardyard_pro/" class="cta-btn">GET STARTED — IT'S FREE</a>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-logo">Hard<span style="color:#FF6B1A;">Yard</span></div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="faq.html">FAQ</a>
+            <a href="privacy-policy.html">Privacy Policy</a>
+            <a href="terms-of-service.html">Terms of Service</a>
+            <a href="mailto:hello@hardyardhq.com">Contact</a>
+        </div>
+        <div class="trademark-notice">
+            <span>® HardYard is a registered trademark. UK Trade Mark No. UK00004398642. Class 42 — Platform development and hosting services. Registered June 2026.</span><br><br>
+            <span>HardYard is a site utility and tool logging platform. It is not an insurance provider and does not provide insurance advice. Tool registration records are provided as an aid to reporting theft and are not a guarantee of insurance cover. Always check the terms of your own insurance policy.</span><br><br>
+            <span>© 2026 HardYard — ALL RIGHTS RESERVED. ICO Registered.</span>
+        </div>
+    </footer>
+
+    <script>
+        function toggleFAQ(btn) {
+            const answer = btn.nextElementSibling;
+            const isOpen = answer.classList.contains('open');
+            
+            // Close all
+            document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+            document.querySelectorAll('.faq-question').forEach(q => q.classList.remove('active'));
+            
+            // Open this one if it wasn't open
+            if (!isOpen) {
+                answer.classList.add('open');
+                btn.classList.add('active');
+            }
+        }
+    </script>
+
+</body>
+</html>
